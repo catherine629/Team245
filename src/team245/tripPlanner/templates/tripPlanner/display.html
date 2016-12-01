@@ -1,0 +1,84 @@
+{% extends "tripPlanner/navbar.html" %}
+
+{% block navbar %}
+<ul class="nav navbar-nav">
+  <li><a href="/">Home</a ></li>
+    <li><a href="/tripPlanner/profile">Profile</a></li>
+  </ul>
+  {% endblock navbar %}
+
+  {% block contentblock %}
+  <div class="container">
+    <div class="col-md-9 leftalign">
+      <!-- Page Heading -->
+      <div class="row">
+          <h1>My Trip To {{trip.destination.name}}</h1>
+          <div class="trip-description">
+            <br>
+            <p><strong>FROM:</strong> {{ trip.origin }} {{ trip.start_date }} </p>
+            <p><strong>TO:</strong> {{ trip.destination.name }} {{ trip.end_date }} </p>
+          </div>
+      </div>
+
+      <!-- /.row -->
+      <div class="daytrips">
+        <hr>
+        {% for d in dayTrips %}
+        <div class="row">
+          <p class="leftalign"><strong>{{ d.daytrip.date }}</strong></p>
+          <div class="attractions">
+            {% for unit in d.units %}
+            <div class="row">
+              <div class="col-md-8 leftalign">
+                <h4><strong><a href="#">{{unit.attraction.name}}</a ></strong></h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <a href="#" class="thumbnail">
+                    <img src="{{unit.attraction.picture.url}}" alt="{{unit.attraction.name}}">
+                  </a >
+                </div>
+                <div class="col-md-9 leftalign">
+                  <p>Rating: {{unit.attraction.rating}}</p>
+                  <p>Price Level: {{unit.attraction.price}}</p>
+                  <p>Address: {{unit.attraction.formatted_address}}</p>
+                  <p>Tag: {{unit.attraction.tag}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                </div>
+              </div>
+              <br>
+              {% endfor %}
+            </div>
+          </div>
+          <hr>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-3">
+        <br>
+        <br>
+        <form method="post" action="{% url 'optimize' trip.id %}">{% csrf_token %}
+          <button id="revoke-btn" class="btn btn-lg btn-primary btn-block" type="submit">
+            Previous <i class="glyphicon glyphicon-chevron-left"></i>
+          </button>
+        </form>
+        <br>
+        <form method="post" action="{% url 'home' %}">{% csrf_token %}
+          <button id="display-btn" class="btn btn-lg btn-primary btn-block" type="submit">
+            Save <i class="glyphicon glyphicon-chevron-right"></i>
+          </button>
+        </form>
+        <br>
+        <form method="post" action="{% url 'delete' trip.id %}">{% csrf_token %}
+          <button id="revoke-btn" class="btn btn-lg btn-primary btn-block" type="submit">
+            Discard <i class="glyphicon glyphicon-remove"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    {% endblock %}

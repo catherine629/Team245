@@ -1,0 +1,1 @@
+{"attractions":[{% for attraction in attractions%}{%spaceless%}{% include 'tripPlanner/attraction.json' %}{%endspaceless%}{% if not forloop.last %}, {% endif %}{% endfor %}]}

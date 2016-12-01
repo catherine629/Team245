@@ -1,0 +1,187 @@
+html {
+  background-image: url('../img/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100%;
+}
+
+body {
+  padding-top: 100px;
+  background: transparent;
+  text-align: center;
+}
+
+.error {
+  color:red;
+  text-align: right;
+}
+
+.profile {
+  margin-left: 16%;
+  padding-top: 5px;
+  padding-left: 40px;
+  padding-bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.register {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  text-align: left;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+
+.profile-info {
+  margin-top: 5px;
+  margin-left: 100px;
+  font-size: 15px;
+  text-align: left;
+}
+
+
+.profile-img {
+  display: block;
+  height: 140px;
+  width: 140px;
+}
+
+.profile-btn {
+  width: 140px;
+  margin-top: -40px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  float: right;
+}
+
+.map {
+  height: 400px;
+  width: 69%;
+  margin-left: 15%;
+  margin-top: 50px;
+}
+
+.button {
+  margin-top: -20px;
+}
+
+.button1 {
+  margin-bottom: 15px;
+}
+
+.button2 {
+  width: 80px;
+}
+
+.button3 {
+  margin-top: 15px;
+}
+
+.img-trip {
+  width: 150px;
+  height: auto;
+}
+
+.trip-card {
+  margin-top: 15px;
+}
+
+.trip-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+.trip-title-frame {
+  padding-top: 10px;
+  padding-bottom: 0px;
+}
+
+.center_div{
+    margin: 0 auto;
+    width:40%
+}
+
+.profileimg{
+  margin: auto;
+  display: block;
+  width: 60%;
+  height: 100%;
+}
+
+.usericon{
+  margin: auto;
+  width: 50px;
+  height: 50px;
+}
+
+.logo{
+  text-align: left;
+  /*font-family:serif;*/
+  /*padding-top: 12px;*/
+  padding-left: 50px;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+}
+.registration-row {
+  margin-top: 10px;
+}
+
+.bar{
+  height:60px;
+}
+
+.fill{
+  min-height: 100%;
+  height: 100%
+}
+
+.scrollable {
+  height: 100%;
+  overflow: auto;
+}
+
+.seperator{
+  padding-top: 20px;
+}
+
+.inline{
+  display: inline-block;
+}
+
+.borderless li{
+   border: 0 none;
+}
+
+.aligncenter{
+  text-align: center
+}
+
+.textborder{
+    display: block;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #f2f2f2;
+}
+
+.zeromargin{
+  margin:0;
+}
+
+#password{
+  width: 100%;
+}
+#username{
+  width:100%;
+}
+
+.hidden{
+  display: none;
+}

@@ -1,0 +1,76 @@
+{% extends "tripPlanner/navbar.html" %}
+
+{% block cssblock %}
+      {% load static %}
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <link href="{% static "tripPlanner/css/welcome.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block navbar %}
+<ul class="nav navbar-nav">
+   <li><a href="/">Home</a ></li>
+   <li><a href="/tripPlanner/profile">Profile</a ></li>
+</ul>
+{% endblock navbar %}
+
+{% block contentblock %}
+<div class="container">
+  <div class="row create-button">
+    <div class="col-lg-6">
+        <a href = {% url "setTrip" %} class="btn btn-primary col-md-10 col-md-offset-1 button1"> Create Your Trip </a>
+    </div>
+  </div>
+  <div class="row">
+    <!-- future trips-->
+    <div class="col-lg-6">
+      <div class="well col-md-10 col-md-offset-1 trip-title-frame">
+        <p class="trip-title">Future Trips</p>
+      </div>
+      <!-- create new trip button -->
+      {% for trip in future_trips %}
+      <div class="row trip-card">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="well media media-body">
+            <div class="col-md-4">
+            <img class="img-circle img-trip" src="#" alt="Card image cap">
+            </div>
+            <div class="col-md-8">
+              <h4>{{trip.destination.name}}</h4>
+              <p>{{trip.start_date}} to {{trip.end_date}}</p>
+              <a href="/tripPlanner/show_attractions/{{ trip.id }}" class="btn btn-primary button2">Edit</a>
+              <a href="/tripPlanner/displayTrip/{{ trip.id }}" class="btn btn-primary button2">View</a>
+              <a href="/tripPlanner/deleteTrip/{{ trip.id }}" class="btn btn-primary button2">Remove</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- history_trips -->
+    <div class="col-lg-6">
+      <div class="well col-md-10 col-md-offset-1 trip-title-frame">
+        <p class="trip-title">History Trips</p>
+      </div>
+      {% for trip in history_trips %}
+      <div class="row trip-card">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="well media media-body">
+            <div class="col-md-4">
+            <img class="img-circle img-trip" src="" alt="Card image cap">
+            </div>
+            <div class="col-md-8">
+              <h4>{{trip.destination.name}}</h4>
+              <p>{{trip.start_date}} to {{trip.end_date}}</p>
+              <a href="/tripPlanner/show_attractions/{{ trip.id }}" class="btn btn-primary button2">Edit</a>
+              <a href="/tripPlanner/displayTrip/{{ trip.id }}" class="btn btn-primary button2">View</a>
+              <a href="/tripPlanner/deleteTrip/{{ trip.id }}" class="btn btn-primary button2">Remove</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "tripPlanner/navbar.html" %}
+
+{% block navbar %}
+<ul class="nav navbar-nav">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tripPlanner/profile">Profile</a></li>
+</ul>
+{% endblock navbar %}
+
+{% block contentblock %}
+<div class="container">
+  <div class="col-md-9">
+    <!-- Page Heading -->
+    <br>
+    <div class="row">
+      <div class="col-md-2 leftalign">
+        <h1>My trip</h1>
+      </div>
+      <div class="header col-md-4">
+        {% if trip %}
+        <p class="leftalign"><strong>FROM: {{ trip.origin }}</strong>  on  {{ trip.start_date }}</p>
+        <p class="leftalign"><strong>TO: {{ trip.destination.name }}</strong>  on  {{ trip.end_date }}</p>
+        {% endif %}
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      {% if trip %}
+      <input type="hidden" id="trip-location" value="{{ trip.destination.location }}">
+      {% endif %}
+        {% for d in dayTrips %}
+        <p class="daytrip-title leftalign">{{ d.dayTrip.date }}</p>
+        <input type="hidden" class="map" id="{{ d.dayTrip.id }}" value="{{ d.locations }}">
+        <input type="hidden" class="locatioinids" id="oldRoute-{{ d.dayTrip.id }}" value="{{ d.locatioinids }}">
+        <div id="map-{{ d.dayTrip.id }}" style="height: 300px; width: 100%;"></div>
+        <div id="panel-{{ d.dayTrip.id }}"></div>
+        <hr>
+        {% endfor %}
+    </div>
+  </div>
+  <div class="col-md-3">
+    <br>
+    <br>
+    <a href="/tripPlanner/show_attractions/{{ trip.id }}" id="revoke-btn" class="btn btn-lg btn-primary btn-block">
+      Previous<i class="glyphicon glyphicon-chevron-left"></i></a>
+    <!-- <form method="post" action="#">{% csrf_token %}
+      <button id="revoke-btn" class="btn btn-lg btn-primary btn-block" type="submit">
+        Previous <i class="glyphicon glyphicon-chevron-left"></i>
+      </button>
+    </form> -->
+    <br>
+    <form method="post" action="{% url 'save' trip.id %}">{% csrf_token %}
+      <div id="dayTrips"></div>
+      <div id="units">
+      {% for d in dayTrips %}
+        {% for unit in d.units %}
+        <input type="hidden" id="unitid-{{ unit.id }}" value="{{ unit.attraction.name }}">
+        {% endfor %}
+      {% endfor %}
+      </div>
+      <button id="display-btn" class="btn btn-lg btn-primary btn-block" type="submit">
+        Save the optimized path <i class="glyphicon glyphicon-chevron-right"></i>
+      </button>
+    </form>
+    <br>
+    <form method="post" action="{% url 'displayTrip' trip.id %}">{% csrf_token %}
+      <button id="revoke-btn" class="btn btn-lg btn-primary btn-block" type="submit">
+        Maintain the original path <i class="glyphicon glyphicon-repeat"></i>
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block jsblock %}
+{% load static %}
+<script src="{% static 'tripPlanner/js/jquery.js' %}"></script>
+<script src="{% static 'tripPlanner/js/attractions.js' %}"></script>
+<script src="{% static 'tripPlanner/js/optimize.js' %}"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAwACYuRoHRMXtGOxuGNMSlSYm2kKw6_c0&callback=initialize"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJLEXqwy464ehUKJS5ofzBj3sCNZMO6GU&callback=initMap">
+</script> -->
+{% endblock %}

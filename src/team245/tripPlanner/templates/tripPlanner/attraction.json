@@ -1,0 +1,1 @@
+{"name":"{{attraction.name}}","html":"{{attraction.html|safe}}"}

@@ -1,0 +1,27 @@
+{% extends "tripPlanner/navbar.html" %}
+
+{% block navbar %}
+<ul class="nav navbar-nav">
+   <li><a href="/">Home</a></li>
+   <li><a href="/tripPlanner/profile">Profile</a></li>
+</ul>
+{% endblock navbar %}
+
+{% block contentblock %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <form class="form-signin" action="{% url 'setTrip' %}" method="post">{% csrf_token %}
+        <h2 class="form-signin-heading">Start Your Journey!</h2>
+        {% for field in form.visible_fields %}
+           <div class = "form-field">
+             {{field}}
+           </div>
+           <br>
+        {% endfor %}
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Start">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

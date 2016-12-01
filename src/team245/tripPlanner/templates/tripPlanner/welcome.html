@@ -1,0 +1,80 @@
+{% extends "tripPlanner/base.html" %}
+
+{% block title %}
+  Login and Registration
+{% endblock %}
+
+{% block navbarContent %}
+<div class="col-md-8 pull-right">
+  <div class="row">
+    <form class="navbar-form navbar-right" action="{% url 'login' %}" method="post">{% csrf_token %}
+      <div class="col-md-5">
+        <input type="text" id="username" name="username" class="form-control" placeholder="Email">
+      </div>
+      <div class="col-md-5">
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+      </div>
+      <div class="col-md-2">
+        <input type="submit" class="btn btn-primary" color="#FFFFFF" value="Sign In">
+      </div>
+      <input type="hidden" name="next" value="{{ next }}">
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-md-4 pull-right">
+      <a href="{% url 'Forget Password' %}" style="color: rgb(255,255,255); text-align: right"><p>forget password?</p></a>
+    </div>
+    {% if form.errors %}
+    <div class="col-md-4 error pull-right">
+      Incorrect username or password.
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock navbarContent %}
+
+{% block pagesection %}
+<div class="container">
+  <div class="row">
+    <div class="register pull-right col-md-4">
+      {% if message %}
+      <div style="font-size: 18px;"> {{message}} </div>
+      {% elif updated_form %}
+      <form class="form-signin" action="{% url title %}" method="post">{% csrf_token %}
+        <h3 class="form-signin-heading">{{title}}</h3>
+        {% for field in updated_form.visible_fields %}
+           <div class = "registration-row">
+             {{field}}
+           </div>
+        {% endfor %}
+        <input class="btn btn-lg btn-primary btn-block button3" type="submit" value="Submit">
+        {% if username %}
+        <input type="hidden" name="username" value={{username}}>
+        {% endif %}
+      </form>
+      {% if error %}
+      <div class="error"> {{error}} </div>
+      {% endif %}
+      {% else %}
+      <form class="form-signin" action="{% url 'register' %}" method="post">{% csrf_token %}
+        <h2 class="form-signin-heading">Sign Up</h2>
+        {% for field in register_form.visible_fields %}
+           <div class = "registration-row">
+             {{field}}
+           </div>
+           <div style="color: red">
+             {{field.errors}}
+           </div>
+        {% endfor %}
+        <input class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:15px" value="Sign Up">
+      </form>
+      {% for error in register_form.non_field_errors %}
+      <p class="error">
+        {{error}}
+      </p>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock pagesection %}

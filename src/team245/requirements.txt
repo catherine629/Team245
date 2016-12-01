@@ -1,0 +1,10 @@
+boto==2.43.0
+dj-database-url==0.4.1
+Django==1.10.1
+django-storages==1.5.1
+gunicorn==19.6.0
+Pillow==3.4.1
+psycopg2==2.6.2
+virtualenv==15.0.3
+wheel==0.26.0
+whitenoise==3.2.2

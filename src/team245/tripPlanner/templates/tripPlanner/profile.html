@@ -1,0 +1,106 @@
+{% extends "tripPlanner/navbar.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block cssblock %}
+      {% load static %}
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <link href="{% static "tripPlanner/css/welcome.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+<ul class="nav navbar-nav">
+   <li><a href="/">Home</a ></li>
+   <li><a href="/tripPlanner/profile">Profile</a ></li>
+</ul>
+{% endblock navbar %}
+
+{% block contentblock %}
+<div class="container">
+  <div class="row">
+    <div class="profile col-md-8">
+      <h3> Profile </h3>
+      <!-- image -->
+      <div class="profile-img col-md-4">
+        {% if profile.photo %}
+        <img src="{{profile.photo.url}}" alt="{{user.first_name}} {{user.last_name}}" class="img-rounded img-responsive"/>
+        {% else %}
+          {% load static %}
+          <img src="{% static "tripPlanner/img/defaultProfile.jpeg" %}" alt="{{user.first_name}} {{user.last_name}}" class="img-rounded img-responsive"/>
+        {% endif %}
+      </div>
+      <table class="profile-info col-md-8">
+        <tr>
+          <td>Email:</td>
+          <td>&nbsp&nbsp&nbsp{{user.username}}</td>
+        </tr>
+        <tr>
+          <td>First Name:</td>
+          <td>&nbsp&nbsp&nbsp{{user.first_name}}</td>
+        </tr>
+        <tr>
+          <td>Last Name:</td>
+          <td>&nbsp&nbsp&nbsp{{user.last_name}}</td>
+        </tr>
+      </table>
+      <div class="col-md-12 text-right">
+        <a href="{% url 'editProfile' %}" class="btn btn-primary profile-btn">Edit</a>
+        <a href="{% url 'Forget Password' %}" class="btn btn-primary profile-btn">Reset Password</a>
+      </div>
+    </div>
+  </div>
+  <div id="map" class="map"></div>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: new google.maps.LatLng(40.440624,-79.995888),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var bounds = new google.maps.LatLngBounds();
+        var infowindow = new google.maps.InfoWindow();
+
+        function addDestinations() {
+          function addMarker(loc, title) {
+              var locations = loc.split(',');
+              var position = new google.maps.LatLng(Number(locations[0]), Number(locations[1]));
+              var marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: title
+              });
+              google.maps.event.addListener(marker, 'click', (function(marker) {
+                return function() {
+                  infowindow.setContent(title);
+                  infowindow.open(map, marker);
+                }
+              })(marker));
+              bounds.extend(position);
+            }
+
+            {% for dest in destinations %}
+              addMarker("{{dest.location}}", "{{dest.name}}");
+            {% endfor %}
+
+            map.fitBounds(bounds)
+
+            //(optional) restore the zoom level after the map is done scaling
+            var listener = google.maps.event.addListener(map, "idle", function () {
+                map.setZoom(4);
+                google.maps.event.removeListener(listener);
+            });
+          }
+
+          {% if destinations %}
+            addDestinations()
+          {% endif %}
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwACYuRoHRMXtGOxuGNMSlSYm2kKw6_c0&callback=initialize&callback=initMap">
+    </script>
+</div>
+{% endblock %}
